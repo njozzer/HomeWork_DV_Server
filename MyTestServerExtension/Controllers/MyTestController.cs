@@ -51,12 +51,13 @@ namespace MyTestServerExtension.Controllers
             var res = testService.ChangeDayCount(sessionContext, model.DocumentId, model.dateFrom, model.dateTo);
             return CommonResponse.CreateSuccess(res);
         }
+        /*
         [HttpPost]
         public CommonResponse InitMyCard([FromBody] MyTestRequestModel model)
         {
             var sessionContext = contextProvider.GetOrCreateCurrentSessionContext();
             testService.InitMyCard(sessionContext, model.DocumentId);
             return CommonResponse.CreateSuccess("Success");
-        }
+        }*/
     }
 }

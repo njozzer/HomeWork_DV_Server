@@ -14,7 +14,7 @@ namespace MyTestServerExtension.CardLifeCycle
 
     public class TestCardLifeCycle : ICardLifeCycleEx
     {
-
+        
         public TestCardLifeCycle(ICardLifeCycleEx baseLifeCycle,IMyTestService myTestService) { 
             this.baseLifeCycle = baseLifeCycle;
             this.myTestService = myTestService;
@@ -22,7 +22,7 @@ namespace MyTestServerExtension.CardLifeCycle
         }  
         protected ICardLifeCycleEx baseLifeCycle {  get;  }
         protected IMyTestService myTestService { get; }
-        public Guid CardTypeId => throw new NotImplementedException();
+        public Guid CardTypeId => baseLifeCycle.CardTypeId;
 
         public Guid Create(SessionContext sessionContext, CardCreateLifeCycleOptions options)
         {

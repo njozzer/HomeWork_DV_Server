@@ -4,8 +4,10 @@ using DocsVision.BackOffice.ObjectModel.Services;
 using DocsVision.Platform.Data.Metadata.CardModel;
 using DocsVision.Platform.Utils.Maybe;
 using DocsVision.Platform.WebClient;
+using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Razor.Language.Intermediate;
+using Microsoft.CodeAnalysis.Operations;
 using MyTestServerExtension.Model;
 using System;
 using System.Text.Json;
@@ -79,6 +81,27 @@ namespace MyTestServerExtension.Services
             var card = sessionContext.ObjectContext.GetObject<Document>(cardId);
             var author = card.MainInfo.Author;
             var manager = author.Manager;
+            var staffSvc = sessionContext.ObjectContext.GetService<IStaffService>();
+            var group = staffSvc.GetGroup(new Guid("{5103C1D3-69AA-4CA7-AD70-CCFD0B4220E6}"));
+            var groupStaff = staffSvc.GetGroupEmployees(group);
+            StaffEmployee tmp = null;
+            foreach (var item in groupStaff)
+            {
+                if (item.Status.ToString() == "Active")
+                {
+                    tmp = item; break;
+                }
+            }
+            StaffEmployee tmpSigned = author.Manager;
+            /*if (author.Unit.Manager.GetObjectId() == manager.GetObjectId()) {
+                tmpSigned = ;
+            }
+            else
+            {
+                tmpSigned = author.Unit.Manager;
+            }*/
+            card.MainInfo["memberIssued"] = tmp.GetObjectId();
+            card.MainInfo["memberSigned"] = tmpSigned.GetObjectId();
             card.MainInfo["memberSent"] = author.GetObjectId();
             card.MainInfo["memberChief"] = manager.GetObjectId();
             card.MainInfo["phoneNumber"] = manager.Phone;

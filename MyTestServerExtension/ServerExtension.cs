@@ -24,10 +24,6 @@ namespace MyTestServerExtension
         {
 
         }
-
-
-
-
         public override string ExtensionName => "ServerExtension";
 
         public override Version ExtensionVersion => new Version(1, 0, 0);
@@ -45,6 +41,8 @@ namespace MyTestServerExtension
                 }
                 return original;
             });
+           
+            
         }
 
 
